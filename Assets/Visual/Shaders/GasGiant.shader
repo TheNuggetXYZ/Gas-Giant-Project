@@ -182,18 +182,14 @@ Shader "Custom/GasGiant"
                 float3 lightDir = normalize(_OmniLightPos - entryPos); //normalize(mainLight.direction);
                 float3 lightColor = mainLight.color;
 
-                float3 sphereCenterEntryDir = entryPos - sphereCenter;
-                float dotLightBonus = 0.1;
-                float lightFactor = saturate(dot(lightDir, normalize(sphereCenterEntryDir)) + dotLightBonus) + _AmbientLight;
-
-                /*float lightEntry, lightTravelDistance;
+                float lightEntry, lightTravelDistance;
                 raySphere(entryPos, lightDir, sphereCenter, sphereRadius, lightEntry, lightTravelDistance);
                 float lightMidT = lightEntry + max(0, lightTravelDistance - lightEntry) * 0.5;
                 float3 lightMidTPos = entryPos + lightDir * lightMidT;
                 float lightAvgPassthroughDensity = getLocalDensity(_Density, lightMidTPos, sphereCenter, sphereRadius, _Fade);
-                float trueLightFactor = exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance);*/
+                float trueLightFactor = exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance);
                 
-                float3 litColor = col * saturate(lightFactor) * lightColor;
+                float3 litColor = col * saturate(trueLightFactor) * lightColor;
 
                 return float4(saturate(litColor), alpha);
             }
