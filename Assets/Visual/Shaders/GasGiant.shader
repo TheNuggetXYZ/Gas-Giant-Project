@@ -4,7 +4,7 @@ Shader "Custom/GasGiant"
     {
         _SphereRadius ("Sphere Radius", Float) = 300
         _Density ("Density", Float) = 10
-        _Fade ("Fade", Float) = 0.1
+        _FalloffExponent ("FalloffExponent", Float) = 0.1
         _LightAbsorption ("Light Absorption", Float) = 0.5
         _ColorNoiseFreq ("Color Noise Freq", Float) = 1
         _ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
@@ -58,7 +58,7 @@ Shader "Custom/GasGiant"
             float4 _MainTex_ST;
             float _SphereRadius;
             float _Density;
-            float _Fade;
+            float _FalloffExponent;
             float _LightAbsorption;
 
             float4 _Color;
@@ -85,9 +85,13 @@ Shader "Custom/GasGiant"
                 return true;
             }
 
-            float getLocalDensity(float density, float3 position, float3 sphereCenter, float sphereRadius, float fade)
+            float getLocalDensity(float density, float3 position, float3 sphereCenter, float sphereRadius, float FalloffExponent)
             {
-                return density * (1 - (length(position - sphereCenter) / sphereRadius)) - fade;
+                // 1 at center, 0 at edge
+                float altitude01 = length(position - sphereCenter) / sphereRadius;
+                float inverseAltitude = saturate(1.0 - altitude01);
+    
+                return density * pow(inverseAltitude, FalloffExponent);
             }
 
             void getDepthPixelWorldPos(float2 UV, out float3 depthWorldPos)
@@ -152,7 +156,7 @@ Shader "Custom/GasGiant"
                 float gasDepth = min(exit - entry, maxGasDepth);
                 float gasDepth01 = gasDepth / maxGasDepth;
 
-                float localDensity = getLocalDensity(_Density, midTPos, sphereCenter, sphereRadius, _Fade);
+                float localDensity = getLocalDensity(_Density, midTPos, sphereCenter, sphereRadius, _FalloffExponent);
 
                 //alpha
                 float alpha = gasDepth01 * localDensity;
@@ -184,7 +188,7 @@ Shader "Custom/GasGiant"
                 raySphere(entryPos, lightDir, sphereCenter, sphereRadius, lightEntry, lightTravelDistance);
                 float lightMidT = lightEntry + max(0, lightTravelDistance - lightEntry) * 0.5;
                 float3 lightMidTPos = entryPos + lightDir * lightMidT;
-                float lightAvgPassthroughDensity = getLocalDensity(_Density, lightMidTPos, sphereCenter, sphereRadius, _Fade);
+                float lightAvgPassthroughDensity = getLocalDensity(_Density, lightMidTPos, sphereCenter, sphereRadius, _FalloffExponent);
                 float trueLightFactor = exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance);
                 
                 float3 litColor = col * saturate(trueLightFactor) * lightColor;
