@@ -13,7 +13,6 @@ Shader "Custom/GasGiant"
         _Color ("Color", Color) = (0, 0.5, 1)
         _SecondaryColor ("Secondary Color", Color) = (0, 1, 1)
         _SpecialColor ("Special Color", Color) = (1, 1, 1)
-        _AmbientLight ("Ambient Light", Float) = 0.05
     }
     SubShader
     {
@@ -72,7 +71,6 @@ Shader "Custom/GasGiant"
             float _SpecialColorNoiseFreq;
 
             float3 _OmniLightPos;
-            float _AmbientLight;
 
             bool raySphere(float3 origin, float3 direction, float3 center, float radius, out float distanceToEntry, out float distanceToExit)
             {
