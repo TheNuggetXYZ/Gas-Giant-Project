@@ -167,10 +167,7 @@ Shader "Custom/GasGiant"
                 noiseSamplePos = (noiseSamplePos - sphereCenter) / _SphereRadius;
 
                 // noise colors
-                float3 colorNoiseSamplePos = noiseSamplePos;
-                colorNoiseSamplePos.x /= _ColorNoiseStretching.x;
-                colorNoiseSamplePos.y /= _ColorNoiseStretching.y;
-                colorNoiseSamplePos.z /= _ColorNoiseStretching.z;
+                float3 colorNoiseSamplePos = noiseSamplePos / _ColorNoiseStretching;
 
                 float colorNoise = saturate(pow(abs(snoise(colorNoiseSamplePos * _ColorNoiseFreq)), _ColorNoiseSharpness));
                 float specialColorNoise = saturate(pow(abs(snoise(colorNoiseSamplePos * _SpecialColorNoiseFreq)), _ColorNoiseSharpness));
