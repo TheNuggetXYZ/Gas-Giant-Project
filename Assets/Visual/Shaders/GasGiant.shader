@@ -178,13 +178,13 @@ Shader "Custom/GasGiant"
 
                 //lighting
                 Light mainLight = GetMainLight();
-                float3 lightDir = normalize(_OmniLightPos - entryPos); //normalize(mainLight.direction);
+                float3 directionToLight = normalize(_OmniLightPos - entryPos);
                 float3 lightColor = mainLight.color;
 
                 float lightEntry, lightTravelDistance;
-                raySphere(entryPos, lightDir, sphereCenter, sphereRadius, lightEntry, lightTravelDistance);
-                float lightMidT = lightEntry + max(0, lightTravelDistance - lightEntry) * 0.5;
-                float3 lightMidTPos = entryPos + lightDir * lightMidT;
+                raySphere(entryPos, directionToLight, sphereCenter, sphereRadius, lightEntry, lightTravelDistance);
+                float lightMidT = lightTravelDistance * 0.5;
+                float3 lightMidTPos = entryPos + directionToLight * lightMidT;
                 float lightAvgPassthroughDensity = getLocalDensity(_Density, lightMidTPos, sphereCenter, sphereRadius, _FalloffExponent);
                 float trueLightFactor = exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance);
                 

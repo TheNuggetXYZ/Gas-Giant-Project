@@ -28,12 +28,12 @@ Material:
     - _AmbientLight: 0.05
     - _ColorNoiseFreq: 1
     - _ColorNoiseSharpness: 2
-    - _Density: 50
+    - _Density: 74
     - _Fade: 0.1
     - _FalloffExponent: 0.8
-    - _LightAbsorption: 0.14
+    - _LightAbsorption: 0.01
     - _SpecialColorNoiseFreq: 1
-    - _SphereRadius: 10
+    - _SphereRadius: 250
     m_Colors:
     - _Color: {r: 0, g: 0.5, b: 1, a: 1}
     - _ColorNoiseStretching: {r: 50, g: 1, b: 50, a: 1}
