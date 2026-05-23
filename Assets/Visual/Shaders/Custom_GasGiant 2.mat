@@ -25,16 +25,21 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _ColorNoiseFreq: 2.65
-    - _ColorNoiseSharpness: 1.78
+    - _ColorNoiseFreq: 3.72
+    - _ColorNoiseSharpness: 1.09
     - _Density: 100
     - _FalloffExponent: 0.17
+    - _Lacunarity: 2.25
     - _LightAbsorption: 0.01
+    - _Octaves: 70
+    - _Persistence: 0.5
     - _SpecialColorNoiseFreq: 2.09
     - _SphereRadius: 150
     m_Colors:
+    - _BaseColor: {r: 0.8666667, g: 0.68235296, b: 0.48235294, a: 1}
     - _Color: {r: 0.8509804, g: 0.68627447, b: 0.4627451, a: 1}
     - _ColorNoiseStretching: {r: 5, g: 1, b: 5, a: 1}
+    - _NoiseColor: {r: 1, g: 0.92941177, b: 0.8352941, a: 1}
     - _SecondaryColor: {r: 1, g: 0.93333334, b: 0.8352941, a: 1}
     - _SpecialColor: {r: 0.78431374, g: 0.54509807, b: 0.22745098, a: 1}
   m_BuildTextureStacks: []

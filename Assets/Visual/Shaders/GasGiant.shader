@@ -11,6 +11,9 @@ Shader "Custom/GasGiant"
         _ColorNoiseFreq ("Color Noise Freq", Float) = 1
         _ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
         _ColorNoiseStretching ("Color Noise Stretching", Vector) = (50, 1, 50)
+        _Octaves ("Noise Layers", Int) = 3
+        _Persistence ("Layer Persistence", Float) = 0.5
+        _Lacunarity ("Layer Density Increase", Float) = 2.0
     }
     SubShader
     {
@@ -64,6 +67,9 @@ Shader "Custom/GasGiant"
             float _ColorNoiseFreq;
             float _ColorNoiseSharpness;
             float3 _ColorNoiseStretching;
+            int _Octaves;
+            float _Persistence;
+            float _Lacunarity;
 
             float3 _OmniLightPos;
 
@@ -119,6 +125,30 @@ Shader "Custom/GasGiant"
                 
                 return o;
             }
+            
+            float getLayeredNoise(float3 p, int octaves, float persistence, float lacunarity)
+            {
+                float amplitude = 1.0;
+                float frequency = 1.0;
+                float noiseValue = 0.0;
+                float maxValue = 0.0; // Used for normalizing the result
+
+                for(int i = 0; i < octaves; i++)
+                {
+                    // Add noise layer
+                    noiseValue += snoise(p * frequency) * amplitude;
+        
+                    // Track max possible value for normalization
+                    maxValue += amplitude;
+        
+                    // Prepare next layer: higher frequency, lower influence
+                    amplitude *= persistence;
+                    frequency *= lacunarity;
+                }
+
+                // Return normalized 0-1 value
+                return noiseValue / maxValue;
+            }
 
             float4 frag (v2f i) : SV_Target
             {
@@ -163,12 +193,11 @@ Shader "Custom/GasGiant"
                 float3 colorNoiseSamplePos = noiseSamplePos / _ColorNoiseStretching;
                 
                 // Octaves
-                float n  = snoise(colorNoiseSamplePos * _ColorNoiseFreq);
-                n += snoise(colorNoiseSamplePos * _ColorNoiseFreq * 2.5) * 0.5;
-                float octavedNoise = saturate((n - 0.5) * _ColorNoiseSharpness + 0.5);
-                
-                // Noise colors
-                float3 col = _BaseColor.rgb * (1 - octavedNoise) + _NoiseColor.rgb * octavedNoise;
+                float rawNoise = getLayeredNoise(colorNoiseSamplePos * _ColorNoiseFreq, _Octaves, _Persistence, _Lacunarity);
+                float layeredNoise = smoothstep(0.5 - _ColorNoiseSharpness * 0.1, 0.5 + _ColorNoiseSharpness * 0.1, rawNoise + 0.5);
+
+// Lerp colors based on the high-detail noise
+float3 col = lerp(_BaseColor.rgb, _NoiseColor.rgb, saturate(layeredNoise));
                 col = saturate(col);
 
                 //lighting

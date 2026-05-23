@@ -29,12 +29,17 @@ Material:
     - _ColorNoiseSharpness: 1.36
     - _Density: 95.2
     - _FalloffExponent: 1
+    - _Lacunarity: 2
     - _LightAbsorption: 0.5
+    - _Octaves: 3
+    - _Persistence: 0.5
     - _SpecialColorNoiseFreq: 1
     - _SphereRadius: 100
     m_Colors:
+    - _BaseColor: {r: 0, g: 0.5, b: 1, a: 1}
     - _Color: {r: 0, g: 0.5, b: 1, a: 1}
     - _ColorNoiseStretching: {r: 20, g: 1, b: 20, a: 1}
+    - _NoiseColor: {r: 0, g: 0.68195224, b: 1, a: 1}
     - _SecondaryColor: {r: 0, g: 0.6401701, b: 1, a: 1}
     - _SpecialColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
