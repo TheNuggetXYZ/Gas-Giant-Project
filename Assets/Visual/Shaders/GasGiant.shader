@@ -4,13 +4,13 @@ Shader "Custom/GasGiant"
     {
         _SphereRadius ("Sphere Radius", Float) = 300
         _Density ("Density", Float) = 10
-        _FalloffExponent ("FalloffExponent", Float) = 0.1
+        _FalloffExponent ("Falloff Exponent", Float) = 0.1
         _LightAbsorption ("Light Absorption", Float) = 0.5
+        _BaseColor ("Base Color", Color) = (0, 0.5, 1)
+        _NoiseColor ("Noise Color", Color) = (0, 1, 1)
         _ColorNoiseFreq ("Color Noise Freq", Float) = 1
         _ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
         _ColorNoiseStretching ("Color Noise Stretching", Vector) = (50, 1, 50)
-        _Color ("Color", Color) = (0, 0.5, 1)
-        _SecondaryColor ("Secondary Color", Color) = (0, 1, 1)
     }
     SubShader
     {
@@ -58,10 +58,9 @@ Shader "Custom/GasGiant"
             float _Density;
             float _FalloffExponent;
             float _LightAbsorption;
-
-            float4 _Color;
-            float4 _SecondaryColor;
+            float4 _BaseColor;
             
+            float4 _NoiseColor;
             float _ColorNoiseFreq;
             float _ColorNoiseSharpness;
             float3 _ColorNoiseStretching;
@@ -169,7 +168,7 @@ Shader "Custom/GasGiant"
                 float octavedNoise = saturate((n - 0.5) * _ColorNoiseSharpness + 0.5);
                 
                 // Noise colors
-                float3 col = _Color.rgb * (1 - octavedNoise) + _SecondaryColor.rgb * octavedNoise;
+                float3 col = _BaseColor.rgb * (1 - octavedNoise) + _NoiseColor.rgb * octavedNoise;
                 col = saturate(col);
 
                 //lighting
