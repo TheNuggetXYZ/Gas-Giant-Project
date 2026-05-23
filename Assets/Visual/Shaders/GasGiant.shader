@@ -226,7 +226,7 @@ Shader "Custom/GasGiant"
                 col = lerp(col, _N2_NoiseColor, saturate(n2_layeredNoise));
                 col = saturate(col);
 
-                //lighting
+                // Lighting
                 Light mainLight = GetMainLight();
                 float3 directionToLight = normalize(_OmniLightPos - entryPos);
                 float3 lightColor = mainLight.color;
@@ -238,7 +238,14 @@ Shader "Custom/GasGiant"
                 float lightAvgPassthroughDensity = getLocalDensity(_Density, lightMidTPos, sphereCenter, sphereRadius, _FalloffExponent);
                 float trueLightFactor = exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance);
                 
-                float3 litColor = col * saturate(trueLightFactor) * lightColor;
+                // Lambertian reflectance
+                float3 normal = normalize(entryPos - sphereCenter);
+
+                float3 lightDir = normalize(_OmniLightPos - entryPos);
+                float diff = saturate(dot(normal, lightDir));
+
+                // Final pixel color
+                float3 litColor = col * (diff * trueLightFactor) * lightColor;
 
                 return float4(saturate(litColor), alpha);
             }
