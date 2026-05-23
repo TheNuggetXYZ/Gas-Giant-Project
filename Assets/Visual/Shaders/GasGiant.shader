@@ -2,18 +2,30 @@ Shader "Custom/GasGiant"
 {
     Properties
     {
+        [Header(Base)]
         _SphereRadius ("Sphere Radius", Float) = 300
         _Density ("Density", Float) = 10
         _FalloffExponent ("Falloff Exponent", Float) = 0.1
         _LightAbsorption ("Light Absorption", Float) = 0.5
         _BaseColor ("Base Color", Color) = (0, 0.5, 1)
-        _NoiseColor ("Noise Color", Color) = (0, 1, 1)
-        _ColorNoiseFreq ("Color Noise Freq", Float) = 1
-        _ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
-        _ColorNoiseStretching ("Color Noise Stretching", Vector) = (50, 1, 50)
-        _Octaves ("Noise Layers", Int) = 3
-        _Persistence ("Layer Persistence", Float) = 0.5
-        _Lacunarity ("Layer Density Increase", Float) = 2.0
+        
+        [Header(Noise 1)]
+        _N1_NoiseColor ("Noise Color", Color) = (0, 1, 1)
+        _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 1
+        _N1_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
+        _N1_ColorNoiseStretching ("Color Noise Stretching", Vector) = (50, 1, 50)
+        _N1_Octaves ("Noise Layers", Int) = 3
+        _N1_Persistence ("Layer Persistence", Float) = 0.5
+        _N1_Lacunarity ("Layer Density Increase", Float) = 2.0
+        
+        [Header(Noise 2)]
+        _N2_NoiseColor ("Noise Color", Color) = (0, 1, 1)
+        _N2_ColorNoiseFreq ("Color Noise Freq", Float) = 1
+        _N2_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
+        _N2_ColorNoiseStretching ("Color Noise Stretching", Vector) = (50, 1, 50)
+        _N2_Octaves ("Noise Layers", Int) = 3
+        _N2_Persistence ("Layer Persistence", Float) = 0.5
+        _N2_Lacunarity ("Layer Density Increase", Float) = 2.0
     }
     SubShader
     {
@@ -63,13 +75,21 @@ Shader "Custom/GasGiant"
             float _LightAbsorption;
             float4 _BaseColor;
             
-            float4 _NoiseColor;
-            float _ColorNoiseFreq;
-            float _ColorNoiseSharpness;
-            float3 _ColorNoiseStretching;
-            int _Octaves;
-            float _Persistence;
-            float _Lacunarity;
+            float4 _N1_NoiseColor;
+            float _N1_ColorNoiseFreq;
+            float _N1_ColorNoiseSharpness;
+            float3 _N1_ColorNoiseStretching;
+            int _N1_Octaves;
+            float _N1_Persistence;
+            float _N1_Lacunarity;
+            
+            float4 _N2_NoiseColor;
+            float _N2_ColorNoiseFreq;
+            float _N2_ColorNoiseSharpness;
+            float3 _N2_ColorNoiseStretching;
+            int _N2_Octaves;
+            float _N2_Persistence;
+            float _N2_Lacunarity;
 
             float3 _OmniLightPos;
 
@@ -190,14 +210,20 @@ Shader "Custom/GasGiant"
                 // noise sampling
                 float3 noiseSamplePos = (rayOrigin + rayDirection * entry);
                 noiseSamplePos = (noiseSamplePos - sphereCenter) / _SphereRadius;
-                float3 colorNoiseSamplePos = noiseSamplePos / _ColorNoiseStretching;
                 
-                // Octaves
-                float rawNoise = getLayeredNoise(colorNoiseSamplePos * _ColorNoiseFreq, _Octaves, _Persistence, _Lacunarity);
-                float layeredNoise = smoothstep(0.5 - _ColorNoiseSharpness * 0.1, 0.5 + _ColorNoiseSharpness * 0.1, rawNoise + 0.5);
+                // Noise 1
+                float3 n1_colorNoiseSamplePos = noiseSamplePos / _N1_ColorNoiseStretching;
+                float n1_rawNoise = getLayeredNoise(n1_colorNoiseSamplePos * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
+                float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
+                
+                // Noise 1
+                float3 n2_colorNoiseSamplePos = noiseSamplePos / _N2_ColorNoiseStretching;
+                float n2_rawNoise = getLayeredNoise(n2_colorNoiseSamplePos * _N2_ColorNoiseFreq, _N2_Octaves, _N2_Persistence, _N2_Lacunarity);
+                float n2_layeredNoise = smoothstep(0.5 - _N2_ColorNoiseSharpness * 0.1, 0.5 + _N2_ColorNoiseSharpness * 0.1, n2_rawNoise + 0.5);
 
-// Lerp colors based on the high-detail noise
-float3 col = lerp(_BaseColor.rgb, _NoiseColor.rgb, saturate(layeredNoise));
+                // Noise colors
+                float3 col = lerp(_BaseColor.rgb, _N1_NoiseColor.rgb, saturate(n1_layeredNoise));
+                col = lerp(col, _N2_NoiseColor, saturate(n2_layeredNoise));
                 col = saturate(col);
 
                 //lighting

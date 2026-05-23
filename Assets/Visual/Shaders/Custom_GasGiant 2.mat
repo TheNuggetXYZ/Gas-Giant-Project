@@ -28,10 +28,20 @@ Material:
     - _ColorNoiseFreq: 3.72
     - _ColorNoiseSharpness: 1.09
     - _Density: 100
-    - _FalloffExponent: 0.17
+    - _FalloffExponent: 0.4
     - _Lacunarity: 2.25
-    - _LightAbsorption: 0.01
-    - _Octaves: 70
+    - _LightAbsorption: 0.003
+    - _N1_ColorNoiseFreq: 3
+    - _N1_ColorNoiseSharpness: 2
+    - _N1_Lacunarity: 2
+    - _N1_Octaves: 5
+    - _N1_Persistence: 0.5
+    - _N2_ColorNoiseFreq: 5
+    - _N2_ColorNoiseSharpness: 5.43
+    - _N2_Lacunarity: 2
+    - _N2_Octaves: 3
+    - _N2_Persistence: 0.5
+    - _Octaves: 5
     - _Persistence: 0.5
     - _SpecialColorNoiseFreq: 2.09
     - _SphereRadius: 150
@@ -39,6 +49,10 @@ Material:
     - _BaseColor: {r: 0.8666667, g: 0.68235296, b: 0.48235294, a: 1}
     - _Color: {r: 0.8509804, g: 0.68627447, b: 0.4627451, a: 1}
     - _ColorNoiseStretching: {r: 5, g: 1, b: 5, a: 1}
+    - _N1_ColorNoiseStretching: {r: 5, g: 1, b: 5, a: 1}
+    - _N1_NoiseColor: {r: 1, g: 0.8862745, b: 0.8, a: 1}
+    - _N2_ColorNoiseStretching: {r: 20, g: 1, b: 20, a: 1}
+    - _N2_NoiseColor: {r: 0.9245283, g: 0.6589089, b: 0.37068352, a: 1}
     - _NoiseColor: {r: 1, g: 0.92941177, b: 0.8352941, a: 1}
     - _SecondaryColor: {r: 1, g: 0.93333334, b: 0.8352941, a: 1}
     - _SpecialColor: {r: 0.78431374, g: 0.54509807, b: 0.22745098, a: 1}
