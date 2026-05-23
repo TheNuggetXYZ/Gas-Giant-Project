@@ -236,16 +236,15 @@ Shader "Custom/GasGiant"
                 float lightMidT = lightTravelDistance * 0.5;
                 float3 lightMidTPos = entryPos + directionToLight * lightMidT;
                 float lightAvgPassthroughDensity = getLocalDensity(_Density, lightMidTPos, sphereCenter, sphereRadius, _FalloffExponent);
-                float trueLightFactor = exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance);
+                float absorption = exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance);
                 
                 // Lambertian reflectance
                 float3 normal = normalize(entryPos - sphereCenter);
 
-                float3 lightDir = normalize(_OmniLightPos - entryPos);
-                float diff = saturate(dot(normal, lightDir));
+                float diffuse = saturate(dot(normal, directionToLight));
 
                 // Final pixel color
-                float3 litColor = col * (diff * trueLightFactor) * lightColor;
+                float3 litColor = col * (diffuse * absorption) * lightColor;
 
                 return float4(saturate(litColor), alpha);
             }
