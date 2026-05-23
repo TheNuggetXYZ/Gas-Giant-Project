@@ -9,10 +9,8 @@ Shader "Custom/GasGiant"
         _ColorNoiseFreq ("Color Noise Freq", Float) = 1
         _ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
         _ColorNoiseStretching ("Color Noise Stretching", Vector) = (50, 1, 50)
-        _SpecialColorNoiseFreq ("Special Color Noise Freq", Float) = 1
         _Color ("Color", Color) = (0, 0.5, 1)
         _SecondaryColor ("Secondary Color", Color) = (0, 1, 1)
-        _SpecialColor ("Special Color", Color) = (1, 1, 1)
     }
     SubShader
     {
@@ -63,12 +61,10 @@ Shader "Custom/GasGiant"
 
             float4 _Color;
             float4 _SecondaryColor;
-            float4 _SpecialColor;
             
             float _ColorNoiseFreq;
             float _ColorNoiseSharpness;
             float3 _ColorNoiseStretching;
-            float _SpecialColorNoiseFreq;
 
             float3 _OmniLightPos;
 
@@ -165,20 +161,16 @@ Shader "Custom/GasGiant"
                 // noise sampling
                 float3 noiseSamplePos = (rayOrigin + rayDirection * entry);
                 noiseSamplePos = (noiseSamplePos - sphereCenter) / _SphereRadius;
-
                 float3 colorNoiseSamplePos = noiseSamplePos / _ColorNoiseStretching;
                 
                 // Octaves
                 float n  = snoise(colorNoiseSamplePos * _ColorNoiseFreq);
                 n += snoise(colorNoiseSamplePos * _ColorNoiseFreq * 2.5) * 0.5;
-                float finalizedNoise = saturate((n - 0.5) * _ColorNoiseSharpness + 0.5);
-
-                float specialColorNoise = saturate(pow(abs(snoise(colorNoiseSamplePos * _SpecialColorNoiseFreq)), _ColorNoiseSharpness));
+                float octavedNoise = saturate((n - 0.5) * _ColorNoiseSharpness + 0.5);
                 
                 // Noise colors
-                float3 col = _Color.rgb * (1 - finalizedNoise) + _SecondaryColor.rgb * finalizedNoise;
-                float3 specialCol = _SpecialColor * specialColorNoise;
-                col = saturate(col + specialCol);
+                float3 col = _Color.rgb * (1 - octavedNoise) + _SecondaryColor.rgb * octavedNoise;
+                col = saturate(col);
 
                 //lighting
                 Light mainLight = GetMainLight();
