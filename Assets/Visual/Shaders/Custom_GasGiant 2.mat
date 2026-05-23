@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_GasGiant
+  m_Name: Custom_GasGiant 2
   m_Shader: {fileID: 4800000, guid: 801a7cbf8dc2f81b1be850c23c145d24, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,19 +25,17 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _AmbientLight: 0.05
-    - _ColorNoiseFreq: 1.22
-    - _ColorNoiseSharpness: 1.02
-    - _Density: 198.1
-    - _Fade: 0.1
-    - _FalloffExponent: 0.8
-    - _LightAbsorption: 0.005
-    - _SpecialColorNoiseFreq: 2
-    - _SphereRadius: 250
+    - _ColorNoiseFreq: 2.65
+    - _ColorNoiseSharpness: 1.78
+    - _Density: 100
+    - _FalloffExponent: 0.17
+    - _LightAbsorption: 0.01
+    - _SpecialColorNoiseFreq: 2.09
+    - _SphereRadius: 150
     m_Colors:
-    - _Color: {r: 0.31055498, g: 0, b: 1, a: 1}
+    - _Color: {r: 0.8509804, g: 0.68627447, b: 0.4627451, a: 1}
     - _ColorNoiseStretching: {r: 5, g: 1, b: 5, a: 1}
-    - _SecondaryColor: {r: 0.2230382, g: 1, b: 0, a: 1}
-    - _SpecialColor: {r: 1, g: 0, b: 0, a: 1}
+    - _SecondaryColor: {r: 1, g: 0.93333334, b: 0.8352941, a: 1}
+    - _SpecialColor: {r: 0.78431374, g: 0.54509807, b: 0.22745098, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -162,17 +162,21 @@ Shader "Custom/GasGiant"
                 float alpha = gasDepth01 * localDensity;
                 alpha = saturate(alpha);
 
-                // noise colors
+                // noise sampling
                 float3 noiseSamplePos = (rayOrigin + rayDirection * entry);
                 noiseSamplePos = (noiseSamplePos - sphereCenter) / _SphereRadius;
 
-                // noise colors
                 float3 colorNoiseSamplePos = noiseSamplePos / _ColorNoiseStretching;
+                
+                // Octaves
+                float n  = snoise(colorNoiseSamplePos * _ColorNoiseFreq);
+                n += snoise(colorNoiseSamplePos * _ColorNoiseFreq * 2.5) * 0.5;
+                float finalizedNoise = saturate((n - 0.5) * _ColorNoiseSharpness + 0.5);
 
-                float colorNoise = saturate(pow(abs(snoise(colorNoiseSamplePos * _ColorNoiseFreq)), _ColorNoiseSharpness));
                 float specialColorNoise = saturate(pow(abs(snoise(colorNoiseSamplePos * _SpecialColorNoiseFreq)), _ColorNoiseSharpness));
                 
-                float3 col = _Color.rgb * (1 - colorNoise) + _SecondaryColor.rgb * colorNoise;
+                // Noise colors
+                float3 col = _Color.rgb * (1 - finalizedNoise) + _SecondaryColor.rgb * finalizedNoise;
                 float3 specialCol = _SpecialColor * specialColorNoise;
                 col = saturate(col + specialCol);
 
