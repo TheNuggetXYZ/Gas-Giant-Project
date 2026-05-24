@@ -14,7 +14,6 @@ Shader "Custom/Star"
         [Header(Noise 1)]
         _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 3
         _N1_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
-        _N1_ColorNoiseStretching ("Color Noise Stretching", Vector) = (5, 1, 5)
         _N1_Octaves ("Noise Layers", Int) = 5
         _N1_Persistence ("Layer Persistence", Float) = 0.5
         _N1_Lacunarity ("Layer Density Increase", Float) = 2.0
@@ -74,7 +73,6 @@ Shader "Custom/Star"
             
             float _N1_ColorNoiseFreq;
             float _N1_ColorNoiseSharpness;
-            float3 _N1_ColorNoiseStretching;
             int _N1_Octaves;
             float _N1_Persistence;
             float _N1_Lacunarity;
@@ -210,7 +208,7 @@ Shader "Custom/Star"
                 float time = _Time.y;
                 
                 // Noise 1
-                float3 n1_colorNoiseSamplePos = noiseSamplePos / _N1_ColorNoiseStretching;
+                float3 n1_colorNoiseSamplePos = noiseSamplePos;
                 n1_colorNoiseSamplePos.xz = rotate(n1_colorNoiseSamplePos.xz, time * _N1_RotationSpeed);
                 float n1_rawNoise = getLayeredNoise(n1_colorNoiseSamplePos * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
                 float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
