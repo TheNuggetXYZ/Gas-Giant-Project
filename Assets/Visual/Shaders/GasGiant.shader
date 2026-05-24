@@ -7,6 +7,8 @@ Shader "Custom/GasGiant"
         _Density ("Density", Float) = 10
         _FalloffExponent ("Falloff Exponent", Float) = 0.1
         _LightAbsorption ("Light Absorption", Float) = 0.5
+        _RimStrength ("Rim Strength", Float) = 1.2
+        _RimSharpness ("Rim Sharpness", Float) = 16
         _BaseColor ("Base Color", Color) = (0, 0.5, 1)
         
         [Header(Noise 1)]
@@ -73,6 +75,8 @@ Shader "Custom/GasGiant"
             float _Density;
             float _FalloffExponent;
             float _LightAbsorption;
+            float _RimStrength;
+            float _RimSharpness;
             float4 _BaseColor;
             
             float4 _N1_NoiseColor;
@@ -236,15 +240,20 @@ Shader "Custom/GasGiant"
                 float lightMidT = lightTravelDistance * 0.5;
                 float3 lightMidTPos = entryPos + directionToLight * lightMidT;
                 float lightAvgPassthroughDensity = getLocalDensity(_Density, lightMidTPos, sphereCenter, sphereRadius, _FalloffExponent);
-                float absorption = exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance);
+                float absorption = saturate(exp(-_LightAbsorption * lightAvgPassthroughDensity * lightTravelDistance));
                 
                 // Lambertian reflectance
                 float3 normal = normalize(entryPos - sphereCenter);
-
                 float diffuse = saturate(dot(normal, directionToLight));
+                
+                // Rim (Highlights the edges of the atmosphere)
+                float rim = 1.0 - saturate(dot(normal, -rayDirection));
+                rim = pow(rim * diffuse * _RimStrength, _RimSharpness);
+                
+                float finalLight = diffuse * absorption + rim;
 
                 // Final pixel color
-                float3 litColor = col * (diffuse * absorption) * lightColor;
+                float3 litColor = col * finalLight * lightColor;
 
                 return float4(saturate(litColor), alpha);
             }
