@@ -3,28 +3,28 @@ Shader "Custom/GasGiant"
     Properties
     {
         [Header(Base)]
-        _SphereRadius ("Sphere Radius", Float) = 300
-        _Density ("Density", Float) = 10
-        _FalloffExponent ("Falloff Exponent", Float) = 0.1
-        _LightAbsorption ("Light Absorption", Float) = 0.5
-        _RimStrength ("Rim Strength", Float) = 1.2
-        _RimSharpness ("Rim Sharpness", Float) = 16
-        _BaseColor ("Base Color", Color) = (0, 0.5, 1)
+        _SphereRadius ("Sphere Radius", Float) = 150
+        _Density ("Density", Float) = 100
+        _FalloffExponent ("Falloff Exponent", Float) = 0.4
+        _LightAbsorption ("Light Absorption", Float) = 0.003
+        _RimStrength ("Rim Strength", Float) = 1.15
+        _RimSharpness ("Rim Sharpness", Float) = 32
+        _BaseColor ("Base Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
         
         [Header(Noise 1)]
-        _N1_NoiseColor ("Noise Color", Color) = (0, 1, 1)
-        _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 1
+        _N1_NoiseColor ("Noise Color", Color) = (1, 0.8862745098039215, 0.8)
+        _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 3
         _N1_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
-        _N1_ColorNoiseStretching ("Color Noise Stretching", Vector) = (50, 1, 50)
-        _N1_Octaves ("Noise Layers", Int) = 3
+        _N1_ColorNoiseStretching ("Color Noise Stretching", Vector) = (5, 1, 5)
+        _N1_Octaves ("Noise Layers", Int) = 5
         _N1_Persistence ("Layer Persistence", Float) = 0.5
         _N1_Lacunarity ("Layer Density Increase", Float) = 2.0
         
         [Header(Noise 2)]
-        _N2_NoiseColor ("Noise Color", Color) = (0, 1, 1)
-        _N2_ColorNoiseFreq ("Color Noise Freq", Float) = 1
-        _N2_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
-        _N2_ColorNoiseStretching ("Color Noise Stretching", Vector) = (50, 1, 50)
+        _N2_NoiseColor ("Noise Color", Color) = (0.788235294117647, 0.5725490196078431, 0.22745098039215686)
+        _N2_ColorNoiseFreq ("Color Noise Freq", Float) = 5
+        _N2_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 5.5
+        _N2_ColorNoiseStretching ("Color Noise Stretching", Vector) = (20, 1, 20)
         _N2_Octaves ("Noise Layers", Int) = 3
         _N2_Persistence ("Layer Persistence", Float) = 0.5
         _N2_Lacunarity ("Layer Density Increase", Float) = 2.0

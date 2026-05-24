@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_GasGiant
+  m_Name: RedGasGiant
   m_Shader: {fileID: 4800000, guid: 801a7cbf8dc2f81b1be850c23c145d24, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,24 +25,27 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _AmbientLight: 0.05
-    - _ColorNoiseFreq: 1.22
-    - _ColorNoiseSharpness: 1.02
-    - _Density: 198.1
-    - _Fade: 0.1
-    - _FalloffExponent: 0.8
-    - _Lacunarity: 2
-    - _LightAbsorption: 0.005
-    - _Octaves: 3
-    - _Persistence: 0.5
-    - _SpecialColorNoiseFreq: 2
+    - _Density: 100
+    - _FalloffExponent: 0.4
+    - _LightAbsorption: 0.001
+    - _N1_ColorNoiseFreq: 4.73
+    - _N1_ColorNoiseSharpness: 2.25
+    - _N1_Lacunarity: 2
+    - _N1_Octaves: 1
+    - _N1_Persistence: 0.5
+    - _N2_ColorNoiseFreq: 1.8
+    - _N2_ColorNoiseSharpness: 5
+    - _N2_Lacunarity: 1.97
+    - _N2_Octaves: 4
+    - _N2_Persistence: 0.6
+    - _RimSharpness: 32
+    - _RimStrength: 1.15
     - _SphereRadius: 250
     m_Colors:
-    - _BaseColor: {r: 0.29722404, g: 0, b: 1, a: 1}
-    - _Color: {r: 0.31055498, g: 0, b: 1, a: 1}
-    - _ColorNoiseStretching: {r: 3, g: 1, b: 3, a: 1}
-    - _NoiseColor: {r: 0, g: 0.4799354, b: 1, a: 1}
-    - _SecondaryColor: {r: 0, g: 0.35025668, b: 1, a: 1}
-    - _SpecialColor: {r: 1, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.8584906, g: 0.5134994, b: 0.36850303, a: 1}
+    - _N1_ColorNoiseStretching: {r: 5, g: 1, b: 5, a: 1}
+    - _N1_NoiseColor: {r: 1, g: 0.7222679, b: 0.6273585, a: 1}
+    - _N2_ColorNoiseStretching: {r: 10, g: 1, b: 10, a: 1}
+    - _N2_NoiseColor: {r: 0.7882353, g: 0.3216683, b: 0.22745095, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
