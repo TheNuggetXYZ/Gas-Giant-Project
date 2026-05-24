@@ -490,7 +490,7 @@ Transform:
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.9463677, z: -0, w: 0.3230917}
-  m_LocalPosition: {x: 139, y: 0, z: 138}
+  m_LocalPosition: {x: 222.5, y: 0, z: 191.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -715,6 +715,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPivot: {fileID: 2040848773}
   camera: {fileID: 330585546}
+  scrollSpeed: 50
+  rotationSpeed: 1
 --- !u!1 &2040848772
 GameObject:
   m_ObjectHideFlags: 0
