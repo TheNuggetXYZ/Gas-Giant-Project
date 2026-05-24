@@ -248,7 +248,8 @@ Shader "Custom/GasGiant"
                 
                 // Rim (Highlights the edges of the atmosphere)
                 float rim = 1.0 - saturate(dot(normal, -rayDirection));
-                rim = pow(rim * diffuse * _RimStrength, _RimSharpness);
+                float proximityFade = saturate(entry / (sphereRadius / 2));
+                rim = pow(rim * diffuse * _RimStrength * proximityFade, _RimSharpness);
                 
                 float finalLight = diffuse * absorption + rim;
 
