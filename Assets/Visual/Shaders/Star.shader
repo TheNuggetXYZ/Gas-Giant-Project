@@ -7,6 +7,9 @@ Shader "Custom/Star"
         _Density ("Density", Float) = 100
         _FalloffExponent ("Falloff Exponent", Float) = 0.4
         [HDR]_BaseColor ("Base Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
+        [HDR]_RimColor ("Rim Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
+        _RimStrength ("Rim Strength", Range(1,2)) = 1.15
+        _RimSharpness ("Rim Sharpness", Float) = 32
         
         [Header(Noise 1)]
         _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 3
@@ -64,7 +67,10 @@ Shader "Custom/Star"
             float _SphereRadius;
             float _Density;
             float _FalloffExponent;
+            float _RimStrength;
+            float _RimSharpness;
             float4 _BaseColor;
+            float4 _RimColor;
             
             float _N1_ColorNoiseFreq;
             float _N1_ColorNoiseSharpness;
@@ -208,8 +214,14 @@ Shader "Custom/Star"
                 n1_colorNoiseSamplePos.xz = rotate(n1_colorNoiseSamplePos.xz, time * _N1_RotationSpeed);
                 float n1_rawNoise = getLayeredNoise(n1_colorNoiseSamplePos * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
                 float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
+                
+                // Rim (Highlights the edges)
+                float3 normal = normalize(entryPos - sphereCenter);
+                float rim = 1.0 - saturate(dot(normal, -rayDirection));
+                rim = pow(rim * _RimStrength, _RimSharpness);
+                float3 rimColor = rim * _RimColor;
 
-                return float4(_BaseColor.rgb - n1_layeredNoise, alpha);
+                return float4(_BaseColor.rgb - n1_layeredNoise + rimColor, alpha);
             }
             ENDHLSL
         }
