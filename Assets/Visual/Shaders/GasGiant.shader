@@ -215,13 +215,19 @@ Shader "Custom/GasGiant"
                 float3 noiseSamplePos = (rayOrigin + rayDirection * entry);
                 noiseSamplePos = (noiseSamplePos - sphereCenter) / _SphereRadius;
                 
+                // Movement
+                float time = _Time.y;
+                float noiseMovementAmount = time * 0.03;
+                float3 noiseMovementDirection = float3(1, 0, 1);
+                float3 noiseMovement = noiseMovementDirection * noiseMovementAmount;
+                
                 // Noise 1
-                float3 n1_colorNoiseSamplePos = noiseSamplePos / _N1_ColorNoiseStretching;
+                float3 n1_colorNoiseSamplePos = noiseSamplePos / _N1_ColorNoiseStretching + noiseMovement;
                 float n1_rawNoise = getLayeredNoise(n1_colorNoiseSamplePos * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
                 float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
                 
                 // Noise 1
-                float3 n2_colorNoiseSamplePos = noiseSamplePos / _N2_ColorNoiseStretching;
+                float3 n2_colorNoiseSamplePos = noiseSamplePos / _N2_ColorNoiseStretching + noiseMovement;
                 float n2_rawNoise = getLayeredNoise(n2_colorNoiseSamplePos * _N2_ColorNoiseFreq, _N2_Octaves, _N2_Persistence, _N2_Lacunarity);
                 float n2_layeredNoise = smoothstep(0.5 - _N2_ColorNoiseSharpness * 0.1, 0.5 + _N2_ColorNoiseSharpness * 0.1, n2_rawNoise + 0.5);
 
