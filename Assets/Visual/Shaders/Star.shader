@@ -6,7 +6,8 @@ Shader "Custom/Star"
         _SphereRadius ("Sphere Radius", Float) = 150
         _Density ("Density", Float) = 100
         _FalloffExponent ("Falloff Exponent", Float) = 0.4
-        [HDR]_BaseColor ("Base Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
+        [HDR]_BaseCoolColor ("Base Cool Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
+        [HDR]_BaseHotColor ("Base Hot Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
         [HDR]_RimColor ("Rim Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
         _RimStrength ("Rim Strength", Range(1,2)) = 1.15
         _RimSharpness ("Rim Sharpness", Float) = 32
@@ -68,7 +69,8 @@ Shader "Custom/Star"
             float _FalloffExponent;
             float _RimStrength;
             float _RimSharpness;
-            float4 _BaseColor;
+            float4 _BaseCoolColor;
+            float4 _BaseHotColor;
             float4 _RimColor;
             
             float _N1_ColorNoiseFreq;
@@ -218,8 +220,10 @@ Shader "Custom/Star"
                 float rim = 1.0 - saturate(dot(normal, -rayDirection));
                 rim = pow(rim * _RimStrength, _RimSharpness);
                 float3 rimColor = rim * _RimColor;
+                
+                float3 col = lerp(_BaseCoolColor, _BaseHotColor, n1_layeredNoise) + rimColor;
 
-                return float4(_BaseColor.rgb - n1_layeredNoise + rimColor, alpha);
+                return float4(col, alpha);
             }
             ENDHLSL
         }

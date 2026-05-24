@@ -25,12 +25,12 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Density: 100
-    - _FalloffExponent: 0.4
+    - _Density: 93.7
+    - _FalloffExponent: 0.6
     - _N1_ColorNoiseFreq: 5
     - _N1_ColorNoiseSharpness: 2
     - _N1_Lacunarity: 2
-    - _N1_Octaves: 5
+    - _N1_Octaves: 6
     - _N1_Persistence: 0.5
     - _N1_RotationSpeed: 0
     - _N2_ColorNoiseFreq: 5
@@ -39,12 +39,15 @@ Material:
     - _N2_Octaves: 3
     - _N2_Persistence: 0.5
     - _N2_RotationSpeed: 0
+    - _RimSharpness: 48
+    - _RimStrength: 1.261
     - _SphereRadius: 150
     m_Colors:
-    - _BaseColor: {r: 2.6082377, g: 1.4540985, b: 0.18454508, a: 1}
+    - _BaseColor: {r: 2.996078, g: 1.6703202, b: 0.2119866, a: 1}
     - _N1_ColorNoiseStretching: {r: 1, g: 1, b: 1, a: 1}
     - _N1_NoiseColor: {r: 1, g: 0.8862745, b: 0.8, a: 1}
     - _N2_ColorNoiseStretching: {r: 20, g: 1, b: 20, a: 1}
     - _N2_NoiseColor: {r: 0.7882353, g: 0.57254905, b: 0.22745094, a: 1}
+    - _RimColor: {r: 4.9245777, g: 0.7212667, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
