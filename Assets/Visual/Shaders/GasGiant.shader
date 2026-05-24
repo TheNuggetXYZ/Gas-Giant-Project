@@ -19,6 +19,7 @@ Shader "Custom/GasGiant"
         _N1_Octaves ("Noise Layers", Int) = 5
         _N1_Persistence ("Layer Persistence", Float) = 0.5
         _N1_Lacunarity ("Layer Density Increase", Float) = 2.0
+        _N1_RotationSpeed ("Rotation Speed", Float) = 0.05
         
         [Header(Noise 2)]
         _N2_NoiseColor ("Noise Color", Color) = (0.788235294117647, 0.5725490196078431, 0.22745098039215686)
@@ -28,6 +29,7 @@ Shader "Custom/GasGiant"
         _N2_Octaves ("Noise Layers", Int) = 3
         _N2_Persistence ("Layer Persistence", Float) = 0.5
         _N2_Lacunarity ("Layer Density Increase", Float) = 2.0
+        _N2_RotationSpeed ("Rotation Speed", Float) = 0
     }
     SubShader
     {
@@ -86,6 +88,7 @@ Shader "Custom/GasGiant"
             int _N1_Octaves;
             float _N1_Persistence;
             float _N1_Lacunarity;
+            float _N1_RotationSpeed;
             
             float4 _N2_NoiseColor;
             float _N2_ColorNoiseFreq;
@@ -94,6 +97,7 @@ Shader "Custom/GasGiant"
             int _N2_Octaves;
             float _N2_Persistence;
             float _N2_Lacunarity;
+            float _N2_RotationSpeed;
 
             float3 _OmniLightPos;
 
@@ -173,6 +177,14 @@ Shader "Custom/GasGiant"
                 // Return normalized 0-1 value
                 return noiseValue / maxValue;
             }
+            
+            // 2D rotation function
+            float2 rotate(float2 samplePos, float angle)
+            {
+                float s = sin(angle);
+                float c = cos(angle);
+                return float2(samplePos.x * c - samplePos.y * s, samplePos.x * s + samplePos.y * c);
+            }
 
             float4 frag (v2f i) : SV_Target
             {
@@ -212,22 +224,22 @@ Shader "Custom/GasGiant"
                 alpha = saturate(alpha);
 
                 // noise sampling
-                float3 noiseSamplePos = (rayOrigin + rayDirection * entry);
+                float3 noiseSamplePos = entryPos;
                 noiseSamplePos = (noiseSamplePos - sphereCenter) / _SphereRadius;
                 
                 // Movement
                 float time = _Time.y;
-                float noiseMovementAmount = time * 0.03;
-                float3 noiseMovementDirection = float3(1, 0, 1);
-                float3 noiseMovement = noiseMovementDirection * noiseMovementAmount;
+                //float centrifugalFactor = (1.0 - (abs(sphereCenter.y - noiseSamplePos.y) / sphereRadius)) * 60;
                 
                 // Noise 1
-                float3 n1_colorNoiseSamplePos = noiseSamplePos / _N1_ColorNoiseStretching + noiseMovement;
+                float3 n1_colorNoiseSamplePos = noiseSamplePos / _N1_ColorNoiseStretching;
+                n1_colorNoiseSamplePos.xz = rotate(n1_colorNoiseSamplePos.xz, time * _N1_RotationSpeed);
                 float n1_rawNoise = getLayeredNoise(n1_colorNoiseSamplePos * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
                 float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
                 
                 // Noise 1
-                float3 n2_colorNoiseSamplePos = noiseSamplePos / _N2_ColorNoiseStretching + noiseMovement;
+                float3 n2_colorNoiseSamplePos = noiseSamplePos / _N2_ColorNoiseStretching;
+                n2_colorNoiseSamplePos.xz = rotate(n2_colorNoiseSamplePos.xz, time * _N2_RotationSpeed);
                 float n2_rawNoise = getLayeredNoise(n2_colorNoiseSamplePos * _N2_ColorNoiseFreq, _N2_Octaves, _N2_Persistence, _N2_Lacunarity);
                 float n2_layeredNoise = smoothstep(0.5 - _N2_ColorNoiseSharpness * 0.1, 0.5 + _N2_ColorNoiseSharpness * 0.1, n2_rawNoise + 0.5);
 
