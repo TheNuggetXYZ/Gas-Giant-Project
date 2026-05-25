@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class ShowcaseManager : MonoBehaviour
 {
+    [Header("Debug")]
     [SerializeField] private bool loadShowcasesButton;
     [SerializeField] private bool showAllButton;
     [SerializeField] private bool hideAllButton;
-    [SerializeField] private Showcase[] showcases;
+    
+    [Header("Main")]
     [SerializeField] private int startShowcaseIndex;
     [SerializeField] private int showcaseIndex;
+    [SerializeField] private Showcase[] showcases;
 
 #if UNITY_EDITOR
     
