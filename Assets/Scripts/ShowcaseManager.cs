@@ -50,10 +50,18 @@ public class ShowcaseManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            showcaseIndex++;
+            IncrementShowcaseIndexWrap();
             
             SwitchToShowcase(showcaseIndex);
         }
+    }
+
+    private void IncrementShowcaseIndexWrap()
+    {
+        showcaseIndex++;
+        
+        if (showcaseIndex >= showcases.Length)
+            showcaseIndex = 0;
     }
 
     private void SwitchToShowcase(int index)
