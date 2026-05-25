@@ -36,6 +36,9 @@ Material:
     - _N1_RotationSpeed: 10
     - _RimSharpness: 48
     - _RimStrength: 1.2
+    - _ShimmerFrequency: 0.03
+    - _ShimmerScale: 10
+    - _ShimmerSpeed: 0.5
     - _SphereRadius: 150
     m_Colors:
     - _BaseCoolColor: {r: 0, g: 0.37274492, b: 0.7490196, a: 1}

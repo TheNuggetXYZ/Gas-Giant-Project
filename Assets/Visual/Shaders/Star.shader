@@ -11,6 +11,9 @@ Shader "Custom/Star"
         [HDR]_RimColor ("Rim Color", Color) = (4.92457771,0.721266687,0,1)
         _RimStrength ("Rim Strength", Range(1,2)) = 1.261
         _RimSharpness ("Rim Sharpness", Float) = 48
+        _ShimmerScale ("Shimmer Scale", Float) = 10
+        _ShimmerSpeed ("Shimmer Speed", Float) = 0.5
+        _ShimmerFrequency ("Shimmer Frequency", Float) = 0.03
         
         [Header(Noise 1)]
         _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 5
@@ -70,6 +73,9 @@ Shader "Custom/Star"
             float _FalloffExponent;
             float _RimStrength;
             float _RimSharpness;
+            float _ShimmerFrequency;
+            float _ShimmerSpeed;
+            float _ShimmerScale;
             float4 _BaseCoolColor;
             float4 _BaseHotColor;
             float4 _RimColor;
@@ -210,9 +216,10 @@ Shader "Custom/Star"
                 
                 // Movement
                 float time = _Time.y;
+                float3 shimmer = snoise(noiseSamplePos * _ShimmerScale + (time * _ShimmerSpeed)) * _ShimmerFrequency;
                 
                 // Noise 1
-                float3 n1_colorNoiseSamplePos = noiseSamplePos;
+                float3 n1_colorNoiseSamplePos = noiseSamplePos + shimmer;
                 n1_colorNoiseSamplePos.xz = rotate(n1_colorNoiseSamplePos.xz, time * _N1_RotationSpeed);
                 float n1_rawNoise = getLayeredNoise(n1_colorNoiseSamplePos * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
                 float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
