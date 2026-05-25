@@ -17,6 +17,9 @@ public class ShowcaseManager : MonoBehaviour
     
     private void OnValidate()
     {
+        if (showcaseIndex >= 0 && showcaseIndex < showcases.Length)
+            SwitchToShowcase(showcaseIndex);
+        
         if (loadShowcasesButton)
         {
             loadShowcasesButton = false;
@@ -37,9 +40,6 @@ public class ShowcaseManager : MonoBehaviour
             
             foreach (Showcase showcase in showcases) showcase.gameObject.SetActive(false);
         }
-        
-        if (showcaseIndex >= 0 && showcaseIndex < showcases.Length)
-            SwitchToShowcase(showcaseIndex);
     }
     
 #endif
