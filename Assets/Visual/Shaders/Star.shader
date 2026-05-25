@@ -5,20 +5,20 @@ Shader "Custom/Star"
         [Header(Base)]
         _SphereRadius ("Sphere Radius", Float) = 150
         _Density ("Density", Float) = 100
-        _FalloffExponent ("Falloff Exponent", Float) = 0.4
-        [HDR]_BaseCoolColor ("Base Cool Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
-        [HDR]_BaseHotColor ("Base Hot Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
-        [HDR]_RimColor ("Rim Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
-        _RimStrength ("Rim Strength", Range(1,2)) = 1.15
-        _RimSharpness ("Rim Sharpness", Float) = 32
+        _FalloffExponent ("Falloff Exponent", Float) = 0.6
+        [HDR]_BaseCoolColor ("Base Cool Color", Color) = (1.46343589, 0.117817104, 0)
+        [HDR]_BaseHotColor ("Base Hot Color", Color) = (72.6592865,31.5154095,0,1)
+        [HDR]_RimColor ("Rim Color", Color) = (4.92457771,0.721266687,0,1)
+        _RimStrength ("Rim Strength", Range(1,2)) = 1.261
+        _RimSharpness ("Rim Sharpness", Float) = 48
         
         [Header(Noise 1)]
-        _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 3
-        _N1_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 2
-        _N1_Octaves ("Noise Layers", Int) = 5
+        _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 5
+        _N1_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 6.32
+        _N1_Octaves ("Noise Layers", Int) = 6
         _N1_Persistence ("Layer Persistence", Float) = 0.5
         _N1_Lacunarity ("Layer Density Increase", Float) = 2.0
-        _N1_RotationSpeed ("Rotation Speed", Float) = 0.05
+        _N1_RotationSpeed ("Rotation Speed", Float) = 0.01
         _N1_Intensity ("Intensity", Float) = 8
     }
     SubShader
