@@ -33,11 +33,13 @@ Material:
     - _N1_Lacunarity: 2
     - _N1_Octaves: 1
     - _N1_Persistence: 0.5
+    - _N1_RotationSpeed: 0.05
     - _N2_ColorNoiseFreq: 1.8
     - _N2_ColorNoiseSharpness: 5
     - _N2_Lacunarity: 1.97
     - _N2_Octaves: 4
     - _N2_Persistence: 0.6
+    - _N2_RotationSpeed: 0
     - _RimSharpness: 32
     - _RimStrength: 1.15
     - _SphereRadius: 250

@@ -19,6 +19,7 @@ Shader "Custom/Star"
         _N1_Persistence ("Layer Persistence", Float) = 0.5
         _N1_Lacunarity ("Layer Density Increase", Float) = 2.0
         _N1_RotationSpeed ("Rotation Speed", Float) = 0.05
+        _N1_Intensity ("Intensity", Float) = 8
     }
     SubShader
     {
@@ -79,6 +80,7 @@ Shader "Custom/Star"
             float _N1_Persistence;
             float _N1_Lacunarity;
             float _N1_RotationSpeed;
+            float _N1_Intensity;
             
             bool raySphere(float3 origin, float3 direction, float3 center, float radius, out float distanceToEntry, out float distanceToExit)
             {
@@ -221,7 +223,7 @@ Shader "Custom/Star"
                 rim = pow(rim * _RimStrength, _RimSharpness);
                 float3 rimColor = rim * _RimColor;
                 
-                float3 col = lerp(_BaseCoolColor, _BaseHotColor, n1_layeredNoise) + rimColor;
+                float3 col = lerp(_BaseCoolColor, _BaseHotColor, pow(n1_layeredNoise, _N1_Intensity)) + rimColor;
 
                 return float4(col, alpha);
             }
