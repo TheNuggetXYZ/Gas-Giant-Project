@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DefaultStar
+  m_Name: NeutronStar
   m_Shader: {fileID: 4800000, guid: fa46ef458cd7481149f2e701d700356f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -30,27 +30,16 @@ Material:
     - _N1_ColorNoiseFreq: 5
     - _N1_ColorNoiseSharpness: 6.32
     - _N1_Intensity: 8
-    - _N1_Lacunarity: 2
+    - _N1_Lacunarity: 2.5
     - _N1_Octaves: 6
-    - _N1_Persistence: 0.5
-    - _N1_RotationSpeed: 0.01
-    - _N2_ColorNoiseFreq: 5
-    - _N2_ColorNoiseSharpness: 5.5
-    - _N2_Lacunarity: 2
-    - _N2_Octaves: 3
-    - _N2_Persistence: 0.5
-    - _N2_RotationSpeed: 0
+    - _N1_Persistence: 0.77
+    - _N1_RotationSpeed: 10
     - _RimSharpness: 48
-    - _RimStrength: 1.261
+    - _RimStrength: 1.2
     - _SphereRadius: 150
     m_Colors:
-    - _BaseColor: {r: 4.482789, g: 1.4487522, b: 0.31717843, a: 1}
-    - _BaseCoolColor: {r: 0.7490196, g: 0.06030146, b: 0, a: 1}
-    - _BaseHotColor: {r: 72.65929, g: 31.51541, b: 0, a: 1}
-    - _N1_ColorNoiseStretching: {r: 1, g: 1, b: 1, a: 1}
-    - _N1_NoiseColor: {r: 1, g: 0.8862745, b: 0.8, a: 1}
-    - _N2_ColorNoiseStretching: {r: 20, g: 1, b: 20, a: 1}
-    - _N2_NoiseColor: {r: 0.7882353, g: 0.57254905, b: 0.22745094, a: 1}
-    - _RimColor: {r: 4.9245777, g: 0.7212667, b: 0, a: 1}
+    - _BaseCoolColor: {r: 0, g: 0.37274492, b: 0.7490196, a: 1}
+    - _BaseHotColor: {r: 0, g: 53.94225, b: 72.65929, a: 1}
+    - _RimColor: {r: 0, g: 4.924577, b: 4.788303, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

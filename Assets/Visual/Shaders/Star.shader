@@ -6,7 +6,7 @@ Shader "Custom/Star"
         _SphereRadius ("Sphere Radius", Float) = 150
         _Density ("Density", Float) = 100
         _FalloffExponent ("Falloff Exponent", Float) = 0.6
-        [HDR]_BaseCoolColor ("Base Cool Color", Color) = (1.46343589, 0.117817104, 0)
+        [HDR]_BaseCoolColor ("Base Cool Color", Color) = (0.749, 0.059, 0.0)
         [HDR]_BaseHotColor ("Base Hot Color", Color) = (72.6592865,31.5154095,0,1)
         [HDR]_RimColor ("Rim Color", Color) = (4.92457771,0.721266687,0,1)
         _RimStrength ("Rim Strength", Range(1,2)) = 1.261
