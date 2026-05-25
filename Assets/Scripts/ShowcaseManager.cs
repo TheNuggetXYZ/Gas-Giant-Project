@@ -21,7 +21,7 @@ public class ShowcaseManager : MonoBehaviour
         {
             loadShowcasesButton = false;
             
-            showcases = FindObjectsByType<Showcase>(FindObjectsSortMode.None);
+            showcases = FindObjectsByType<Showcase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         }
 
         if (showAllButton)
