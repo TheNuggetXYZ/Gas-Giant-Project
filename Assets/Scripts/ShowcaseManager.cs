@@ -17,13 +17,11 @@ public class ShowcaseManager : MonoBehaviour
     
     private void OnValidate()
     {
-        SwitchToShowcase(showcaseIndex);
-        
         if (loadShowcasesButton)
         {
             loadShowcasesButton = false;
             
-            showcases =  FindObjectsByType<Showcase>(FindObjectsSortMode.None);
+            showcases = FindObjectsByType<Showcase>(FindObjectsSortMode.None);
         }
 
         if (showAllButton)
@@ -39,6 +37,9 @@ public class ShowcaseManager : MonoBehaviour
             
             foreach (Showcase showcase in showcases) showcase.gameObject.SetActive(false);
         }
+        
+        if (showcaseIndex >= 0 && showcaseIndex < showcases.Length)
+            SwitchToShowcase(showcaseIndex);
     }
     
 #endif
