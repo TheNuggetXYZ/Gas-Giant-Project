@@ -33,16 +33,17 @@ Material:
     - _N1_Lacunarity: 2.5
     - _N1_Octaves: 6
     - _N1_Persistence: 0.77
-    - _N1_RotationSpeed: 10
-    - _RimSharpness: 48
-    - _RimStrength: 1.2
-    - _ShimmerFrequency: 0.03
-    - _ShimmerScale: 10
-    - _ShimmerSpeed: 0.5
+    - _N1_RotationSpeed: 0.3
+    - _RimSharpness: 16
+    - _RimStrength: 1.419
+    - _RimVariance: 7
+    - _ShimmerFrequency: 0.003
+    - _ShimmerScale: 25
+    - _ShimmerSpeed: 4
     - _SphereRadius: 150
     m_Colors:
     - _BaseCoolColor: {r: 0, g: 0.37274492, b: 0.7490196, a: 1}
     - _BaseHotColor: {r: 0, g: 53.94225, b: 72.65929, a: 1}
-    - _RimColor: {r: 0, g: 4.924577, b: 4.788303, a: 1}
+    - _RimColor: {r: 0, g: 766.9959, b: 745.77136, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

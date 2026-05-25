@@ -11,6 +11,7 @@ Shader "Custom/Star"
         [HDR]_RimColor ("Rim Color", Color) = (4.92457771,0.721266687,0,1)
         _RimStrength ("Rim Strength", Range(1,2)) = 1.261
         _RimSharpness ("Rim Sharpness", Float) = 48
+        _RimVariance ("Rim Variance", Float) = 1
         _ShimmerScale ("Shimmer Scale", Float) = 10
         _ShimmerSpeed ("Shimmer Speed", Float) = 0.5
         _ShimmerFrequency ("Shimmer Frequency", Float) = 0.03
@@ -73,6 +74,7 @@ Shader "Custom/Star"
             float _FalloffExponent;
             float _RimStrength;
             float _RimSharpness;
+            float _RimVariance;
             float _ShimmerFrequency;
             float _ShimmerSpeed;
             float _ShimmerScale;
@@ -228,7 +230,7 @@ Shader "Custom/Star"
                 float3 normal = normalize(entryPos - sphereCenter);
                 float rim = 1.0 - saturate(dot(normal, -rayDirection));
                 rim = pow(rim * _RimStrength, _RimSharpness);
-                float3 rimColor = rim * _RimColor;
+                float3 rimColor = rim * _RimColor * saturate(pow(n1_layeredNoise, _RimVariance));
                 
                 float3 col = lerp(_BaseCoolColor, _BaseHotColor, pow(n1_layeredNoise, _N1_Intensity)) + rimColor;
 
