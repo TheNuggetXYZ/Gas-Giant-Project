@@ -15,6 +15,7 @@ Shader "Custom/Star"
         _ShimmerScale ("Shimmer Scale", Float) = 10
         _ShimmerSpeed ("Shimmer Speed", Float) = 0.5
         _ShimmerFrequency ("Shimmer Frequency", Float) = 0.03
+        _SunspotIntensity ("Sunspot Intensity", Float) = 2
         
         [Header(Noise 1)]
         _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 5
@@ -78,6 +79,7 @@ Shader "Custom/Star"
             float _ShimmerFrequency;
             float _ShimmerSpeed;
             float _ShimmerScale;
+            float _SunspotIntensity;
             float4 _BaseCoolColor;
             float4 _BaseHotColor;
             float4 _RimColor;
@@ -221,9 +223,9 @@ Shader "Custom/Star"
                 float3 shimmer = snoise(noiseSamplePos * _ShimmerScale + (time * _ShimmerSpeed)) * _ShimmerFrequency;
                 
                 // Noise 1
-                float3 n1_colorNoiseSamplePos = noiseSamplePos + shimmer;
+                float3 n1_colorNoiseSamplePos = noiseSamplePos;
                 n1_colorNoiseSamplePos.xz = rotate(n1_colorNoiseSamplePos.xz, time * _N1_RotationSpeed);
-                float n1_rawNoise = getLayeredNoise(n1_colorNoiseSamplePos * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
+                float n1_rawNoise = getLayeredNoise((n1_colorNoiseSamplePos + shimmer) * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
                 float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
                 
                 // Rim (Highlights the edges)
@@ -233,6 +235,10 @@ Shader "Custom/Star"
                 float3 rimColor = rim * _RimColor * saturate(pow(n1_layeredNoise, _RimVariance));
                 
                 float3 col = lerp(_BaseCoolColor, _BaseHotColor, pow(n1_layeredNoise, _N1_Intensity)) + rimColor;
+                
+                // Sunspot addition
+                float sunspots = n1_rawNoise * _SunspotIntensity;
+                col += sunspots * _BaseCoolColor.rgb;
 
                 return float4(col, alpha);
             }
