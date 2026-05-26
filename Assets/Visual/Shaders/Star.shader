@@ -229,9 +229,12 @@ Shader "Custom/Star"
                 float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
                 
                 // Rim (Highlights the edges)
+                float distFactor = saturate(entry / (sphereRadius * 0.1));
+                float adaptiveSharpness = lerp(_RimSharpness, 2.0, distFactor);
+                float adaptiveStrength = lerp(_RimStrength, _RimStrength * 16.0, distFactor);
                 float3 normal = normalize(entryPos - sphereCenter);
                 float rim = 1.0 - saturate(dot(normal, -rayDirection));
-                rim = pow(rim * _RimStrength, _RimSharpness);
+                rim = pow(rim * adaptiveStrength, adaptiveSharpness);
                 float3 rimColor = rim * _RimColor * saturate(pow(n1_layeredNoise, _RimVariance));
                 
                 float3 col = lerp(_BaseCoolColor, _BaseHotColor, pow(n1_layeredNoise, _N1_Intensity)) + rimColor;

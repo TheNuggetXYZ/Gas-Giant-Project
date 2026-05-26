@@ -41,12 +41,13 @@ Material:
     - _N2_Persistence: 0.5
     - _N2_RotationSpeed: 0
     - _RimSharpness: 48
-    - _RimStrength: 1.261
+    - _RimStrength: 1.169
     - _RimVariance: 3
     - _ShimmerFrequency: 0.02
     - _ShimmerScale: 6.02
     - _ShimmerSpeed: 0.02
     - _SphereRadius: 150
+    - _SunspotIntensity: 2
     m_Colors:
     - _BaseColor: {r: 4.482789, g: 1.4487522, b: 0.31717843, a: 1}
     - _BaseCoolColor: {r: 0.7490196, g: 0.06030146, b: 0, a: 1}
@@ -55,6 +56,6 @@ Material:
     - _N1_NoiseColor: {r: 1, g: 0.8862745, b: 0.8, a: 1}
     - _N2_ColorNoiseStretching: {r: 20, g: 1, b: 20, a: 1}
     - _N2_NoiseColor: {r: 0.7882353, g: 0.57254905, b: 0.22745094, a: 1}
-    - _RimColor: {r: 29.50885, g: 4.321944, b: 0, a: 1}
+    - _RimColor: {r: 3.6886063, g: 0.540243, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
