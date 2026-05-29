@@ -16,12 +16,12 @@ Shader "Custom/Star"
         _ShimmerSpeed ("Shimmer Speed", Float) = 0.5
         _ShimmerFrequency ("Shimmer Frequency", Float) = 0.03
         _SunspotIntensity ("Sunspot Intensity", Float) = 2
-        _LevelOfDetail ("LOD", Float) = 0.05
-        _RimLODMultiplier ("Rim LOD Multiplier", Float) = 2
+        _LevelOfDetail ("LOD", Float) = 80
+        _RimLODMultiplier ("Rim LOD Multiplier", Float) = 3
         
         [Header(Noise 1)]
         _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 5
-        _N1_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 6.32
+        _N1_ColorNoiseSharpness ("Color Noise Sharpness", Float) = 6
         _N1_Octaves ("Noise Layers", Int) = 6
         _N1_Persistence ("Layer Persistence", Float) = 0.5
         _N1_Lacunarity ("Layer Density Increase", Float) = 2.0

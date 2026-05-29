@@ -27,8 +27,9 @@ Material:
     m_Floats:
     - _Density: 100
     - _FalloffExponent: 0.6
+    - _LevelOfDetail: 80
     - _N1_ColorNoiseFreq: 5
-    - _N1_ColorNoiseSharpness: 6.32
+    - _N1_ColorNoiseSharpness: 6
     - _N1_Intensity: 8
     - _N1_Lacunarity: 2
     - _N1_Octaves: 6
@@ -40,8 +41,9 @@ Material:
     - _N2_Octaves: 3
     - _N2_Persistence: 0.5
     - _N2_RotationSpeed: 0
-    - _RimSharpness: 48
-    - _RimStrength: 1.169
+    - _RimLODMultiplier: 3
+    - _RimSharpness: 16
+    - _RimStrength: 2
     - _RimVariance: 3
     - _ShimmerFrequency: 0.02
     - _ShimmerScale: 6.02
@@ -56,6 +58,6 @@ Material:
     - _N1_NoiseColor: {r: 1, g: 0.8862745, b: 0.8, a: 1}
     - _N2_ColorNoiseStretching: {r: 20, g: 1, b: 20, a: 1}
     - _N2_NoiseColor: {r: 0.7882353, g: 0.57254905, b: 0.22745094, a: 1}
-    - _RimColor: {r: 3.6886063, g: 0.540243, b: 0, a: 1}
+    - _RimColor: {r: 1.8443031, g: 0.2701215, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
