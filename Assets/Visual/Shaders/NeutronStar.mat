@@ -27,6 +27,7 @@ Material:
     m_Floats:
     - _Density: 100
     - _FalloffExponent: 0.6
+    - _LevelOfDetail: 60
     - _N1_ColorNoiseFreq: 5
     - _N1_ColorNoiseSharpness: 6.32
     - _N1_Intensity: 8
@@ -34,6 +35,7 @@ Material:
     - _N1_Octaves: 6
     - _N1_Persistence: 0.77
     - _N1_RotationSpeed: 0.3
+    - _RimLODMultiplier: 4
     - _RimSharpness: 16
     - _RimStrength: 1.419
     - _RimVariance: 7
@@ -41,6 +43,7 @@ Material:
     - _ShimmerScale: 25
     - _ShimmerSpeed: 4
     - _SphereRadius: 150
+    - _SunspotIntensity: 2
     m_Colors:
     - _BaseCoolColor: {r: 0, g: 0.37274492, b: 0.7490196, a: 1}
     - _BaseHotColor: {r: 0, g: 53.94225, b: 72.65929, a: 1}
