@@ -16,6 +16,8 @@ Shader "Custom/Star"
         _ShimmerSpeed ("Shimmer Speed", Float) = 0.5
         _ShimmerFrequency ("Shimmer Frequency", Float) = 0.03
         _SunspotIntensity ("Sunspot Intensity", Float) = 2
+        _LevelOfDetail ("LOD", Float) = 0.05
+        _RimLODMultiplier ("Rim LOD Multiplier", Float) = 2
         
         [Header(Noise 1)]
         _N1_ColorNoiseFreq ("Color Noise Freq", Float) = 5
@@ -80,6 +82,8 @@ Shader "Custom/Star"
             float _ShimmerSpeed;
             float _ShimmerScale;
             float _SunspotIntensity;
+            float _LevelOfDetail;
+            float _RimLODMultiplier;
             float4 _BaseCoolColor;
             float4 _BaseHotColor;
             float4 _RimColor;
@@ -179,6 +183,8 @@ Shader "Custom/Star"
 
             float4 frag (v2f i) : SV_Target
             {
+                // ___BASE___
+                
                 float3 rayOrigin = _WorldSpaceCameraPos;
                 float3 rayDirection = normalize(i.worldPos - rayOrigin);
                 float3 sphereCenter = unity_ObjectToWorld._m03_m13_m23;
@@ -213,7 +219,12 @@ Shader "Custom/Star"
                 //alpha
                 float alpha = gasDepth01 * localDensity;
                 alpha = saturate(alpha);
+                
 
+                // ___DETAIL___
+                
+                float distFactor = saturate(entry / (sphereRadius * _LevelOfDetail));
+                
                 // noise sampling
                 float3 noiseSamplePos = entryPos;
                 noiseSamplePos = (noiseSamplePos - sphereCenter) / _SphereRadius;
@@ -222,20 +233,32 @@ Shader "Custom/Star"
                 float time = _Time.y;
                 float3 shimmer = snoise(noiseSamplePos * _ShimmerScale + (time * _ShimmerSpeed)) * _ShimmerFrequency;
                 
-                // Noise 1
+                // Noise sampling
                 float3 n1_colorNoiseSamplePos = noiseSamplePos;
+                
+                // Noise rotation
                 n1_colorNoiseSamplePos.xz = rotate(n1_colorNoiseSamplePos.xz, time * _N1_RotationSpeed);
+                
+                // Noise Calc
                 float n1_rawNoise = getLayeredNoise((n1_colorNoiseSamplePos + shimmer) * _N1_ColorNoiseFreq, _N1_Octaves, _N1_Persistence, _N1_Lacunarity);
+                
+                // Noise LOD
+                n1_rawNoise = lerp(n1_rawNoise, 0.5, distFactor); // 0.5 represents an everage noise value
+                
+                // Noise final
                 float n1_layeredNoise = smoothstep(0.5 - _N1_ColorNoiseSharpness * 0.1, 0.5 + _N1_ColorNoiseSharpness * 0.1, n1_rawNoise + 0.5);
                 
                 // Rim (Highlights the edges)
-                float distFactor = saturate(entry / (sphereRadius * 0.1));
-                float adaptiveSharpness = lerp(_RimSharpness, 2.0, distFactor);
-                float adaptiveStrength = lerp(_RimStrength, _RimStrength * 16.0, distFactor);
                 float3 normal = normalize(entryPos - sphereCenter);
-                float rim = 1.0 - saturate(dot(normal, -rayDirection));
-                rim = pow(rim * adaptiveStrength, adaptiveSharpness);
-                float3 rimColor = rim * _RimColor * saturate(pow(n1_layeredNoise, _RimVariance));
+                float rimBase = 1.0 - saturate(dot(normal, -rayDirection));
+                
+                float rimSharpness = clamp(lerp(_RimSharpness, 1, distFactor * _RimLODMultiplier), 1, _RimSharpness);
+                float rimStrength = _RimStrength;
+                
+                float rim = pow(rimBase * rimStrength, rimSharpness);
+                
+                float3 rimColor = max(rim * _RimColor * saturate(pow(n1_layeredNoise, _RimVariance)), 0);
+                
                 
                 float3 col = lerp(_BaseCoolColor, _BaseHotColor, pow(n1_layeredNoise, _N1_Intensity)) + rimColor;
                 
