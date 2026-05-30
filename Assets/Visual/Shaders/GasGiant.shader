@@ -9,6 +9,7 @@ Shader "Custom/GasGiant"
         _LightAbsorption ("Light Absorption", Float) = 0.003
         _RimStrength ("Rim Strength", Float) = 1.15
         _RimSharpness ("Rim Sharpness", Float) = 32
+        _RimMaskExponent ("Rim Mask Exponent", Range(0,1)) = 0.1
         _BaseColor ("Base Color", Color) = (0.8666666666666667, 0.6823529411764706, 0.4823529411764706)
         
         [Header(Noise 1)]
@@ -79,6 +80,7 @@ Shader "Custom/GasGiant"
             float _LightAbsorption;
             float _RimStrength;
             float _RimSharpness;
+            float _RimMaskExponent;
             float4 _BaseColor;
             
             float4 _N1_NoiseColor;
@@ -265,9 +267,10 @@ Shader "Custom/GasGiant"
                 float diffuse = saturate(dot(normal, directionToLight));
                 
                 // Rim (Highlights the edges of the atmosphere)
-                float rim = 1.0 - saturate(dot(normal, -rayDirection));
+                float rimBase = 1.0 - saturate(dot(normal, -rayDirection));
                 float proximityFade = saturate(entry / (sphereRadius / 2));
-                rim = pow(rim * diffuse * _RimStrength * proximityFade, _RimSharpness);
+                float rimMask = pow(diffuse, _RimMaskExponent);
+                float rim = pow(rimBase * rimMask * _RimStrength * proximityFade, _RimSharpness);
                 
                 float finalLight = diffuse * absorption + rim;
 

@@ -1361,7 +1361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1174905745
 Transform:
   m_ObjectHideFlags: 0
@@ -1479,7 +1479,7 @@ MonoBehaviour:
   showAllButton: 0
   hideAllButton: 0
   startShowcaseIndex: 0
-  showcaseIndex: 2
+  showcaseIndex: 0
   showcases:
   - {fileID: 1174905746}
   - {fileID: 1846278454}
@@ -1717,7 +1717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2065313538
 MonoBehaviour:
   m_ObjectHideFlags: 0

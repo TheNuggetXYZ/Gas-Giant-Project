@@ -40,7 +40,8 @@ Material:
     - _N2_Octaves: 3
     - _N2_Persistence: 0.5
     - _N2_RotationSpeed: 0
-    - _RimSharpness: 32
+    - _RimMaskExponent: 0.1
+    - _RimSharpness: 16
     - _RimStrength: 1.15
     - _SphereRadius: 150
     m_Colors:
