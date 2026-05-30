@@ -277,7 +277,7 @@ Shader "Custom/GasGiant"
                 // Final pixel color
                 float3 litColor = col * finalLight * lightColor;
 
-                return float4(saturate(litColor), alpha);
+                return float4(litColor, alpha);
             }
             ENDHLSL
         }
